@@ -22,14 +22,22 @@ function App(){
     setProjects(response.data);
    });
   }, []);
-  // adiçao de mais um projeto // 
-  function AddProject(){
+  // adiçao de mais um projeto em modelo asincorna //  
+
+   async function AddProject(){
     /*adicionando uma informação no array e passando a data no projeto//
     /projects.push(`Novo Projeto${Data.new()}`);*/
     // copiando o valor de projects e adiconando novas informaçoes para projects
-    setProjects([...projects, `Novo Projeto ${Date.now()}`]);
-    
-    console.log(projects);
+    //setProjects([...projects, `Novo Projeto ${Date.now()}`]);//
+    //enviar uma requisição do tipo post para rota projects  e enviando informaçoes
+     const response = await api.post('projects', {
+      title: `Novo Projeto ${Date.now()}`,
+      owner: 'highlander santos' 
+     });
+     // criando uma vairavel contendo todos os dados do array mais a nova informação adicionda //
+     const project = response.data;
+     //copiando todos osprojetos metodo de imutabilidade e adicionando um novo projeto no final do array
+     setProjects([...projects, project]);
   }
 
   return(
